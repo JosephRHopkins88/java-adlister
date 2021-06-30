@@ -1,4 +1,3 @@
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -6,21 +5,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet (name="WebPageCountServlet", urlPatterns = "/count")
+@WebServlet(name = "HelloWorldServlet", urlPatterns = "/hello")
 public class HelloWorldServlet extends HttpServlet {
-    int countViews = 0;
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+            String name = req.getParameter("name");
+            res.setContentType("text/html");
+            PrintWriter out = res.getWriter();
 
-        resp.setContentType("text/html");
-        PrintWriter out = resp.getWriter();
-
-        if(req.getParameter("reset") != null)
-            countViews = 0;
-        else
-            countViews += 1;
-        out.println("<h1>The count is currently at " + countViews + "</h1>");
-
+            if (name == null) {
+                out.println("<h1>Hello, World!</h1>");
+            } else {
+                out.println("<h1>Hello, " + name + "!</h1>");
+            }
+        }
     }
-}
